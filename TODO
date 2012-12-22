@@ -1,0 +1,7 @@
+Update mechanism:
+
+  1. Regenerate templates
+  2. Write all style sheets + style sheet list file to user's style
+     sheet dir
+  3. Update user's .Xresources if required
+
