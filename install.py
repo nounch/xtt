@@ -12,9 +12,18 @@ import errno
 import config
 
 
+# Main .Xresource template
 xresourcesTemplate = './templates/.Xresources.template'
-styleSheetsListTemplate ='./templates/styleSheets/.Xresources.styleSheetsList.template'
+# Header + non-theme resource definitions
+xresourcesMixin = './templates/.Xresouces.mixin.template'
+# .Xresrources.styleSheetsList template
+styleSheetsListTemplate ='./templates/.Xresources.styleSheetsList.template'
+# .Xresrources.styleSheetsList header
+styleSheetsListHeader ='./templates/.Xresources.styleSheetsListHeader.template'
+# Template file extension (has to be stripped before writing to the user's
+# directories)
 TEMPLATE_EXTENSION = 'template'
+# Suffix to use for style sheets
 STYLE_SHEET_SUFFIX = 'XTerm'
 
 
@@ -34,8 +43,8 @@ def upperFirstAlpha(string):
 
 
 # Add include statements to the .Xresources  template
-styleSheetTemplatePathes = glob.glob('./templates/styleSheets/*')
-includeLine = 'Include %s\n#include "%s"'
+styleSheetPathes = glob.glob(os.path.dirname(os.path.realpath(__file__)) + '/styleSheets/.*')
+includeLine = '! Include %s\n#include "%s"\n\n'
 aliasLine = 'alias ' + config.aliasPrefix  + '%s = "xterm -name %s"'
 styleSheetNames = []
 
@@ -45,19 +54,29 @@ styleSheetNames = []
 #==========================================================================
 
 # Append includes to style sheets list template
-with open(styleSheetsListTemplate , 'a+') as resourcesTemplate:
-    for styleSheetTemplatePath in  styleSheetTemplatePathes:
+with open(styleSheetsListTemplate , 'w') as resourcesTemplate:
+    # Add header
+    with open(styleSheetsListHeader , 'r') as headerFile:
+        for line in headerFile:
+            resourcesTemplate.write(line);
+    # Add include statements
+    for styleSheetTemplatePath in  styleSheetPathes:
         styleSheetName = os.path.basename(styleSheetTemplatePath)
         resourcesTemplate.write(
             includeLine % (styleSheetName + ' theme',
                            config.styleSheetsDir + styleSheetTemplatePath))
-        # Doing this here save another loop
+        # Generate list of style sheets - doing this here save another loop
         styleSheetNames.append(styleSheetName)
 
 # Append style sheets list include template to xresources template.
 # (This is required to be able to regenerate the list of style sheets
 # without altering the user's .Xresources file.)
-with open(xresourcesTemplate, 'r') as resourcesFileTemplate:
+with open(xresourcesTemplate, 'w') as resourcesFileTemplate:
+    with open(xresourcesMixin, 'r') as mixin:
+        # Add mixin
+        for line in mixin:
+            resourcesFileTemplate.write(line)
+    # Add include statement
     resourcesFileTemplate.write(includeLine % (
             ' all XTerm style sheets',
             config.styleSheetsDir + os.path.basename(
@@ -73,22 +92,17 @@ with open(xresourcesTemplate, 'r') as resourcesFileTemplate:
 # This is required to be able to regenerate the list of style sheets
 # without altering the user's .Xresources file.
 with open(styleSheetsListTemplate, 'r') as listTemplate:
-    with open(conf.styleSheetsDir + os.path.basename(
-            styleSheetsListTemplate).rstrip(
-            '.' + TEMPLATE_EXTENSION), 'a+') as list:
-        for line in list:
+    with open(config.styleSheetsDir + os.path.basename(
+            styleSheetsListTemplate).rstrip(TEMPLATE_EXTENSION).rstrip(
+            '.'), 'w') as xres:
+        for line in listTemplate:
             xres.write(line)
         xres.write('\n')
 
 # Copy style sheet templates to user's style sheets directory.
-for file in styleSheetTemplatePathes:
+for file in styleSheetPathes:
     shutil.copyfile(file, config.styleSheetsDir + os.path.basename(
-            file).rstrip(TEMPLATE_EXTENSION))
-
-# Copy style sheets list template to user's style sheets directory.
-shutil.copyfile(
-    styleSheetsListTemplate,
-    config.styleSheetsDir + os.path.basename(styleSheetsListTemplate))
+            file))
 
 # Append configuration to the user's .Xresources file
 with open(xresourcesTemplate, 'r') as template:
@@ -96,4 +110,6 @@ with open(xresourcesTemplate, 'r') as template:
         for line in template:
             userFile.write(line);
         userFile.write('\n')
+
+# TODO: Write alias definitions to user's shell config file.
 

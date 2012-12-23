@@ -1,0 +1,10 @@
+!==========================================================================
+! List of all style sheets
+!==========================================================================
+
+! Include .Xresources.solarizedDarkXTerm theme
+#include "/home/gronpy/temp/xTermSolarizerTest/styleSheets//home/gronpy/programming/diverse/xtermSolarizer/styleSheets/.Xresources.solarizedDarkXTerm"
+
+! Include .Xresources.solarizedBrightXTerm theme
+#include "/home/gronpy/temp/xTermSolarizerTest/styleSheets//home/gronpy/programming/diverse/xtermSolarizer/styleSheets/.Xresources.solarizedBrightXTerm"
+

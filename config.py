@@ -1,15 +1,28 @@
+import os.path
+
+
 #==========================================================================
 # Configuration
 #==========================================================================
 
+userHome = os.path.expanduser('~')
+
+
+# DEBUG
+debugDir = userHome + '/temp/xTermSolarizerTest/'
+
+
 # Main X resources file
-xresources = '~/.Xresrouces'
+# xresources = userHome + '/.Xresrouces'
+xresources = debugDir + '.Xresrouces'  # DEBUG
 
 # Directory for style sheets
-styleSheetsDir = '~/.styleSheets/xtermStyleSheets/'
+# styleSheetsDir = userHome + '/.styleSheets/xtermStyleSheets/'
+styleSheetsDir = debugDir + 'styleSheets/'  # DEBUG
 
 # Shell configuration file (at least supported shells: bash, zsh, ksh)
-shellConfigFile = '~/.bashrc'
+# shellConfigFile = userHome + '/.bashrc'
+shellConfigFile = debugDir + '.bashrc'  # DEBUG
 
 # Specifies whether aliases should be created
 generateAliases = True
