@@ -8,21 +8,14 @@ import os.path
 userHome = os.path.expanduser('~')
 
 
-# DEBUG
-debugDir = userHome + '/temp/xTermSolarizerTest/'
-
-
 # Main X resources file
-# xresources = userHome + '/.Xresrouces'
-xresources = debugDir + '.Xresrouces'  # DEBUG
+xresources = userHome + '/.Xresrouces'
 
 # Directory for style sheets
-# styleSheetsDir = userHome + '/.styleSheets/xtermStyleSheets/'
-styleSheetsDir = debugDir + 'styleSheets/'  # DEBUG
+styleSheetsDir = userHome + '/.styleSheets/xtermStyleSheets/'
 
 # Shell configuration file (at least supported shells: bash, zsh, ksh)
-# shellConfigFile = userHome + '/.bashrc'
-shellConfigFile = debugDir + '.bashrc'  # DEBUG
+shellConfigFile = userHome + '/.bashrc'
 
 # Specifies whether aliases should be created
 generateAliases = True

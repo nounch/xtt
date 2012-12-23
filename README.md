@@ -5,24 +5,39 @@
 
 **XTermThemer** is a tiny *XTerm* theme manager. It provides the dark and the bright version of the [Solarized]((http://ethanschoonover.com/solarized) color theme for *XTerm* out of the box, though it is capable of providing any number of themes. It allows multiple *XTerm* color themes to be run in one *X* session and decouples styling in a non-destructive way using *XTerm's* `-name` feature to extend the default `XTerm` `X` resources class (or any other class that has been defined using *XTerm's* `-class` command line parameter).
 
-Prerequesit: *XTerm* with `color256` option compiled into it. (It may also be useful to export the `TERM` enviroment variable to tell other applications that the terminal supports colors (system-depend).)
+Prerequesit: *XTerm* with color support compiled into it (`color256` or `color16`). (It may also be useful to export the `TERM` enviroment variable to tell other applications that the terminal supports colors (system-depend).)
+
+## Installation
+
+1. Clone the repo
+2. Edit pathes and options in `config.py`
+3. `./install.py install`
 
 ## Details
 
 **XTermThemer** gives you everything that *Solarized* has to offer...
 
-![More info could be found here http://ethanschoonover.com/solarized .](http://ethanschoonover.com/solarized/img/solarized-vim.png)
+![More info can be found here: http://ethanschoonover.com/solarized .](http://ethanschoonover.com/solarized/img/solarized-vim.png)
 
 ... without any hassle™.
 
 
 It automagically appends the required configuration lines to the user's `.Xresources` and adds the provided `.Xresources.<themeName>` style sheets to wherever they should go to (default `~/.styleSheets/xtermStyleSheets/`). To ensure a minimal signature in the user's configuration files `.Xresources` only includes one include file (`.Xresources.styleSheetsList`) which then includes all style sheets. **XTermThemer** also generates an alias for each style sheet and appends it to the user's shell configuration file.
 
-### Options
+### Options & Usage
+
+Options:
 
 - `./install.py generate`: Generate template files
 - `./install.py install`: Install themes (writes to the user's `.Xresources`/shell config file etc.)
 - `./install.py clear`:  Clear template files
+
+Files:
+
+- `config.py`: Configurations to apply when running `./install.py install`
+- `templates/.Xresources.mixin.template`: Not style sheet-related resource definitions
+- `templates/.Xresources.styleSheetsListHeader.template`: Header for the include file
+- `aliases/shellFileHeader.template`: Heading for the shell configuration file
 
 During installations old configuration file settings are not altered. So it is recommended to manually remove old include statements/themes when before reinstalling, though this is not required and will not affect the new installation in any way.
 
@@ -66,5 +81,5 @@ Have a look at:
 - `styleSheets/.Xresources.solarizedBrightXTerm`
 - `styleSheets/.Xresources.solarizedDarkXTerm`
 
-<div style="background-color: #232323; color: #ffffff; padding: 100px; padding: 10px; text-align: center">Feel free to add themes!</div>
+*Feel free to add themes!*
 
