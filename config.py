@@ -31,3 +31,6 @@ generateAliases = True
 # `xterm' is the prefix, `SolarizedBright' is the style sheet name
 aliasPrefix = 'xterm'
 
+# Prefix for style sheets (Do not change this, if possible.)
+styleSheetPrefix = '.Xresources.'
+
